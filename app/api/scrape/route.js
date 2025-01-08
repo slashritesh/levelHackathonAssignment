@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { ApifyClient } from 'apify-client';
+import { prisma } from '@/lib/db';
 
 
 const client = new ApifyClient({

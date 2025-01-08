@@ -74,3 +74,29 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* Styling for the scrollbar container */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the vertical scrollbar */
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+
+/* Styling for the scrollbar track (the background area) */
+::-webkit-scrollbar-track {
+  background: #0a031e; /* Light gray color for track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+/* Styling for the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #ff8800; /* Blue color for the thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  transition: background 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Styling for the thumb when hovered */
+::-webkit-scrollbar-thumb:hover {
+  background: #2980b9; /* Darker blue color for the thumb when hovered */
+}
+
