@@ -1,0 +1,48 @@
+import { NextResponse } from 'next/server';
+import { ApifyClient } from 'apify-client';
+
+
+const client = new ApifyClient({
+    token: process.env.APIFY_TOKEN
+});
+
+
+export async function POST(req) {
+    try {
+        // Parse request body
+        const body = await req.json();
+        const { username, resultsLimit } = body;
+
+        // Validate input
+        if (!username || !Array.isArray(username) || !resultsLimit) {
+            return NextResponse.json(
+                { error: 'Invalid input. Please provide "username" (array) and "resultsLimit" (number).' },
+                { status: 400 }
+            );
+        }
+
+        // Prepare Actor input
+        const input = {
+            username,
+            resultsLimit,
+        };
+
+        // Run the Actor and wait for it to finish
+        const run = await client.actor("nH2AHrwxeTRJoN5hX").call(input);
+
+        // Fetch results from the Actor's dataset
+        const { items } = await client.dataset(run.defaultDatasetId).listItems();
+
+        // Return the scraped results
+        return NextResponse.json(
+            { success: true, data: items },
+            { status: 200 }
+        );
+    } catch (error) {
+        console.error('Error in scraping:', error);
+        return NextResponse.json(
+            { success: false, error: error.message },
+            { status: 500 }
+        );
+    }
+}
