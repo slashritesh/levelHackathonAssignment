@@ -79,7 +79,8 @@ body {
 /* Styling for the scrollbar container */
 ::-webkit-scrollbar {
   width: 8px; /* Width of the vertical scrollbar */
-  height: 8px; /* Height of the horizontal scrollbar */
+  height: 8px;
+  display: none; /* Height of the horizontal scrollbar */
 }
 
 /* Styling for the scrollbar track (the background area) */

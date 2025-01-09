@@ -2,7 +2,9 @@
 import BGgrid from "@/components/BGgrid";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { scrapeCompititorsData } from "@/lib/data";
+import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -13,20 +15,19 @@ const HomePage = () => {
   const router = useRouter();
 
   const getInsight = async (e) => {
+    setloading(true);
     e.preventDefault();
     const form = new FormData(e.target);
     const name = form.get("username");
 
-    console.log(name);
-
     try {
       const scrapedData = await scrapeCompititorsData(name);
-      if (!scrapedData) {
-        setloading(true);
-      }
+      
 
-      setloading(false);
       setData(scrapedData);
+      setloading(false);
+
+      router.push("/analytics");
     } catch (error) {
       console.log(error);
     }
@@ -41,18 +42,28 @@ const HomePage = () => {
           AI powered Strategy to Grow Business
         </h1>
         <form method="POST" onSubmit={getInsight} className="flex gap-5 py-20">
-          <Input
-            name="username"
-            placeholder="Enter Compititors Instrgram Id"
-            className="w-96 text-base rounded-xl p-6"
-          />
+          <div>
+            <Input
+              name="username"
+              placeholder="Enter Compititors Instrgram Id"
+              className="w-96 mb-2 text-base rounded-xl p-6"
+            />
+            <Label className="text-sm flex gap-2 items-center mx-3 text-slate-500">
+              {" "}
+              <AlertCircle size={15} /> only public account can fetched
+            </Label>
+          </div>
+
           <Button type="submit" className="p-6 rounded-xl text-base">
-            Fetch User
+            Fetch from instagram
           </Button>
         </form>
       </div>
       <div className="px-20">
-        {loading ? "...fetching data" : <div>{JSON.stringify(data)}</div>}
+        {loading ? <p>..fetching Data From Instagram</p> : (
+          <div>
+
+          </div>)}
       </div>
     </main>
   );

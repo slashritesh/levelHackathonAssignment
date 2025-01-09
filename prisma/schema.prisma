@@ -20,6 +20,6 @@ model Compititor {
   username String
   post_data   String
   profile_data String?
-  userId String @unique
+  userId String 
 }
 

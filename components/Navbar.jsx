@@ -1,7 +1,7 @@
 "use client";
 import { ScanSearch } from "lucide-react";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   LoginLink,
   LogoutLink,
@@ -9,7 +9,8 @@ import {
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
-
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const { getUser } = useKindeBrowserClient();
@@ -26,6 +27,12 @@ const Navbar = () => {
       <div>
         {user ? (
           <div className="flex gap-5">
+            <div className="flex gap-3">
+
+            <Link href={"/analytics"} className={cn(buttonVariants({variant:"ghost"}),"p-5 hover:bg-orange-800 hover:text-white text-base")}>Analytics</Link>
+            <Link href={"/chat"} className={cn(buttonVariants({variant:"ghost"}),"p-5 hover:bg-orange-800 hover:text-white text-base")}>Chat</Link>
+            <Link href={"/"} className={cn(buttonVariants({variant:"ghost"}),"p-5 hover:bg-orange-800 hover:text-white text-base")}>Add Compititor</Link>
+            </div>
             <div>
               {user ? (
                 <Image
