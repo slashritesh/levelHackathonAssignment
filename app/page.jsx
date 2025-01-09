@@ -4,13 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { scrapeCompititorsData } from "@/lib/data";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { AlertCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const HomePage = () => {
   const [data, setData] = useState();
   const [loading, setloading] = useState(false);
+  const { isAuthenticated } = useKindeBrowserClient();
 
   const router = useRouter();
 
@@ -21,13 +23,14 @@ const HomePage = () => {
     const name = form.get("username");
 
     try {
-      const scrapedData = await scrapeCompititorsData(name);
-      
+      if (isAuthenticated) {
+        const scrapedData = await scrapeCompititorsData(name);
+        setData(scrapedData);
+        setloading(false);
 
-      setData(scrapedData);
-      setloading(false);
-
-      router.push("/analytics");
+        router.push("/analytics");
+      }
+      redirect("/");
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +52,6 @@ const HomePage = () => {
               className="w-96 mb-2 text-base rounded-xl p-6"
             />
             <Label className="text-sm flex gap-2 items-center mx-3 text-slate-500">
-              {" "}
               <AlertCircle size={15} /> only public account can fetched
             </Label>
           </div>
@@ -60,10 +62,17 @@ const HomePage = () => {
         </form>
       </div>
       <div className="px-20">
-        {loading ? <p>..fetching Data From Instagram</p> : (
-          <div>
-
-          </div>)}
+        {loading ? (
+          <div className="flex flex-col items-center gap-3">
+            <Loader className="animate-spin" />
+            <p className="text-center animate-pulse">
+              Scraping Data From Instagram... <br />
+              Storing in Astra DB
+            </p>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </main>
   );
