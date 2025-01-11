@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { scrapeCompititorsData } from "@/lib/data";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Loader } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -30,7 +30,7 @@ const HomePage = () => {
 
         router.push("/analytics");
       }
-      redirect("/");
+      redirect("/https://spyandgrow.kinde.com/auth/cx/_:nav&m:login&psid:01944bc1dbf49fb217da3ccd1fb6d083");
     } catch (error) {
       console.log(error);
     }

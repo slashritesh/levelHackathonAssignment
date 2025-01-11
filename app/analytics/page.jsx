@@ -6,6 +6,8 @@ import { AlertTriangle, Loader } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Markdown from "react-markdown";
 
+const markdown = "### Key Performance Metrics for slashritesh\n#### Consistency Rate: 57.14%\nThe user posts content 4 times a week on average, which is higher than the average user.\n#### Average Engagement Rate: 46%\nThe user's posts receive an average of 46 likes and comments per post, which is higher than the average user.\n#### Average Reach: 58.33%\nThe user's posts reach an average of 58.33% of their followers, which is higher than the average user.\n#### Top Liked Post: \nThe post with the highest number of likes is the one with 148 views and 100 likes, which is a video post."
+
 const AnalyticsPage = () => {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -48,20 +50,20 @@ const AnalyticsPage = () => {
           })}
         </div>
 
-        <div className="w-full h-[50vh] items-center flex justify-center rounded-lg p-10 bg-slate-900">
+        <div className="w-full min-h-[50vh] items-center flex justify-center rounded-lg p-10 bg-slate-900">
           {loading ? (
             <div className="flex flex-col items-center gap-3">
               <Loader className="animate-spin" />
               <p className="text-center animate-pulse">
                 Running Flow... <br />
-                Get Analytics from Api Request...{" "}
+                Get Analytics from Api Request...
               </p>
             </div>
           ) : (
             <div>
               {fetcheddata ? (
                 <div className="prose prose-invert">
-                  <Markdown>{JSON.stringify(fetcheddata)}</Markdown>
+                  <Markdown>{fetcheddata}</Markdown>
                 </div>
               ) : (
                 <div className="flex justify-between items-center h-full">

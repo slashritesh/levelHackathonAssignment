@@ -28,13 +28,12 @@ export async function POST(req) {
             resultsLimit,
         };
 
-        // Run the Actor and wait for it to finish
         const run = await client.actor("nH2AHrwxeTRJoN5hX").call(input);
 
-        // Fetch results from the Actor's dataset
+        
         const { items } = await client.dataset(run.defaultDatasetId).listItems();
 
-        // Return the scraped results
+        
         return NextResponse.json(
             { success: true, data: items },
             { status: 200 }
